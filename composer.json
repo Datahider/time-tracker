@@ -1,0 +1,13 @@
+{
+    "name": "pio/time-tracker",
+    "description": "Description of project time-tracker.",
+    "authors": [
+        {
+            "name": "drweb",
+            "email": "pio@pio.su"
+        }
+    ],
+    "require": {
+        "losthost/db": "1.2.1"
+    }
+}
