@@ -95,7 +95,7 @@ class Timer extends \losthost\DB\DBObject {
     protected function _test_timer_events() {
 
         $this->start('test object 2', 'test project 1', 'No comments');
-        sleep(3);
+        sleep(63);
         $this->stop('Some comment');
         
         $view = new \losthost\DB\DBView("SELECT * FROM [timer_events] ORDER BY id");
@@ -103,11 +103,23 @@ class Timer extends \losthost\DB\DBObject {
         $count = 0;
         while ($view->next()) {
             $count++;
+            switch ($count) {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    $test = new \losthost\SelfTestingSuite\Test(\losthost\SelfTestingSuite\Test::EQ, 63);
+                    $test->test($view->duration);
+                    break;
+
+                default:
+                    throw new \Exception('Wrong number of events', -10002);
+            }
         }
         
-        if ($count != 4) {
-            throw new \Exception('Wrong number of events', -10002);
-        }
     }
     
     protected function _test_data() {

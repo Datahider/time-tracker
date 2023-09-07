@@ -65,7 +65,7 @@ class TimerEvent extends \losthost\DB\DBObject {
         
         $this->started = 0;
         $this->end_time = $end_time->format(\losthost\DB\DB::DATE_FORMAT);
-        $this->duration = $start_time->diff($end_time)->format('%s');
+        $this->duration = date_create_immutable($this->end_time)->getTimestamp() - date_create_immutable($this->start_time)->getTimestamp();
         if ($comment !== null) {
             $this->comment = $comment;
         }
