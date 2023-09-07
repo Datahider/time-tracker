@@ -8,6 +8,11 @@
         }
     ],
     "require": {
-        "losthost/db": "1.2.1"
+        "losthost/db": "1.4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "losthost\\timetracker\\": "src"
+        }
     }
 }

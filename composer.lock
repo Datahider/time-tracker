@@ -4,24 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f95e6b9017a666e98790d119579fb3ec",
+    "content-hash": "89f48aa8bcfefc81bbd8f6ca3b827438",
     "packages": [
         {
             "name": "losthost/db",
-            "version": "1.2.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Datahider/DB.git",
-                "reference": "c39f8d95656ab9eff33f888e84487cda248c8cb6"
+                "reference": "1f703884c98f248ad886e47b818294107a713d75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Datahider/DB/zipball/c39f8d95656ab9eff33f888e84487cda248c8cb6",
-                "reference": "c39f8d95656ab9eff33f888e84487cda248c8cb6",
+                "url": "https://api.github.com/repos/Datahider/DB/zipball/1f703884c98f248ad886e47b818294107a713d75",
+                "reference": "1f703884c98f248ad886e47b818294107a713d75",
                 "shasum": ""
             },
             "require": {
-                "losthost/self-testing-suite": "1.0.0",
+                "losthost/self-testing-suite": "1.0.4",
                 "php": ">=7.4.0"
             },
             "type": "class",
@@ -50,22 +50,22 @@
             ],
             "support": {
                 "issues": "https://github.com/Datahider/DB/issues",
-                "source": "https://github.com/Datahider/DB/tree/1.2.1"
+                "source": "https://github.com/Datahider/DB/tree/v1.4.2"
             },
-            "time": "2023-09-01T07:46:50+00:00"
+            "time": "2023-09-07T00:26:34+00:00"
         },
         {
             "name": "losthost/self-testing-suite",
-            "version": "1.0.0",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Datahider/lhTestingSuite.git",
-                "reference": "102abc22ea33e8b6370f40dd2466b9c2c4871b47"
+                "reference": "664ea58491888d35ebb727630f7db7628d2db95b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Datahider/lhTestingSuite/zipball/102abc22ea33e8b6370f40dd2466b9c2c4871b47",
-                "reference": "102abc22ea33e8b6370f40dd2466b9c2c4871b47",
+                "url": "https://api.github.com/repos/Datahider/lhTestingSuite/zipball/664ea58491888d35ebb727630f7db7628d2db95b",
+                "reference": "664ea58491888d35ebb727630f7db7628d2db95b",
                 "shasum": ""
             },
             "require": {
@@ -87,9 +87,9 @@
             "description": "A parrent class for self-testing classes",
             "support": {
                 "issues": "https://github.com/Datahider/lhTestingSuite/issues",
-                "source": "https://github.com/Datahider/lhTestingSuite/tree/1.0.0"
+                "source": "https://github.com/Datahider/lhTestingSuite/tree/1.0.4"
             },
-            "time": "2023-07-04T17:11:04+00:00"
+            "time": "2023-09-04T05:48:36+00:00"
         }
     ],
     "packages-dev": [],
