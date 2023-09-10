@@ -56,52 +56,23 @@ class Timer extends \losthost\DB\DBObject {
     }
     
     public function add($object, $project, $start_time, $end_or_duration, $comment=null, $tags=null) {
-        if ($this->isStarted()) {
-            throw new \Exception("Can't add event to started timer.", -10013);
-        }
-        
-        if ($start_time === 'now' || $start_time === null) {
-            $start_time = date_create_immutable();
-        }
-        
-        if ($end_or_duration === 'now' || $end_or_duration === null) {
-            $end_or_duration = date_create_immutable();
-        }
-        
-        $event = new TimerEvent($this);
-        $event->object = $object;
-        $event->project = $project;
-        $event->started = 0;
-        
-        if (is_a($start_time, 'DateTime') || is_a($start_time, 'DateTimeImmutable')) {
-            $event->start_time = $start_time->format(\losthost\DB\DB::DATE_FORMAT);
-        } else {
-            $event->start_time = $start_time;
-        }
-        
-        if (is_a($end_or_duration, 'DateInterval')) {
-            $event->end_time = date_create_immutable($event->start_time)->add($end_or_duration)->format(\losthost\DB\DB::DATE_FORMAT);
-        } elseif (is_a($end_or_duration, 'DateTime') || is_a($end_or_duration, 'DateTimeImmutable')) {
-            $event->end_time = $end_or_duration->format(\losthost\DB\DB::DATE_FORMAT);
-        } else { // int
-            $event->end_time = date_create_immutable($event->start_time)->add(date_interval_create_from_date_string("+${end_or_duration} sec"))->format(\losthost\DB\DB::DATE_FORMAT);
-        }
-
-        $event->duration = date_create_immutable($event->end_time)->getTimestamp() - date_create_immutable($event->start_time)->getTimestamp();
-        $event->comment = $comment;
-        $event->write('add_tags', $tags);
+        new TimerEvent($this, $object, $project, $start_time, $end_or_duration, $comment, $tags);
     }
     
     protected function _test_timer_events() {
 
         $this->start('test object 2', 'test project 1', 'No comments');
-        sleep(63);
+        echo '<wait '. DURATION_TEST. ' seconds>';
+        sleep(DURATION_TEST);
+        echo '.';
         $this->stop('Some comment');
         
+        echo '.';
         $view = new \losthost\DB\DBView("SELECT * FROM [timer_events] ORDER BY id");
         
         $count = 0;
         while ($view->next()) {
+            echo '.';
             $count++;
             switch ($count) {
                 case 1:
@@ -111,7 +82,7 @@ class Timer extends \losthost\DB\DBObject {
                 case 3:
                     break;
                 case 4:
-                    $test = new \losthost\SelfTestingSuite\Test(\losthost\SelfTestingSuite\Test::EQ, 63);
+                    $test = new \losthost\SelfTestingSuite\Test(\losthost\SelfTestingSuite\Test::EQ, DURATION_TEST);
                     $test->test($view->duration);
                     break;
 
@@ -123,43 +94,8 @@ class Timer extends \losthost\DB\DBObject {
     }
     
     protected function _test_data() {
-        return [
-            'fetch' => '_test_skip_',
-            'write' => '_test_skip_',
-            'insert' => '_test_skip_',
-            'update' => '_test_skip_',
-            'isNew' => '_test_skip_',
-            'isModified' => '_test_skip_',
-            'asString' => '_test_skip_',
-            'getFields' => '_test_skip_',
-            'getAutoIncrement' => '_test_skip_',
-            'getPrimaryKey' => '_test_skip_',
-            'getLabel' => '_test_skip_',
-            '__set' => '_test_skip_',
-            '__get' => '_test_skip_',
-            'prepare' => '_test_skip_',
-            'createAlterTable' => '_test_skip_',
-            'upgradeTable' => '_test_skip_',
-            'initDataStructure' => '_test_skip_',
-            'fetchDataStructure' => '_test_skip_',
-            'initData' => '_test_skip_',
-            'checkSetField' => '_test_skip_',
-            'replaceVars' => '_test_skip_',
-            'beforeInsert' => '_test_skip_',
-            'intranInsert' => '_test_skip_',
-            'afterInsert' => '_test_skip_',
-            'beforeUpdate' => '_test_skip_',
-            'intranUpdate' => '_test_skip_',
-            'afterUpdate' => '_test_skip_',
-            'beforeDelete' => '_test_skip_',
-            'intranDelete' => '_test_skip_',
-            'afterDelete' => '_test_skip_',
-            'beforeModify' => '_test_skip_',
-            'afterModify' => '_test_skip_',
-            'addModifiedField' => '_test_skip_',
-            'clearModifiedFeilds' => '_test_skip_',
-            'eventSetActive' => '_test_skip_',
-            'eventUnsetActive' => '_test_skip_',
+        
+        return array_merge(parent::_test_data(), [
             'isStarted' => '_test_skip_',
             'start' => [
                 ['test object 1', 'test project 1', 'test comment 1', new Tag('tag 1'), null]
@@ -169,11 +105,11 @@ class Timer extends \losthost\DB\DBObject {
             ],
             'add' => [
                 ['test object 1', 'test project 2', 'now', 10, 'test comment 2', new Tag('tag 1'), null],
-                ['test object 1', 'test project 3', 'now', new \DateInterval('PT10M'), 'test comment 3', new Tag('tag 1'), null]
+                ['test object 1', 'test project 3', 'now', new \DateInterval('PT10M'), 'test comment 3', new Tag('tag 2'), null]
             ],
             '_test_timer_events' => [
                 [false]
             ]
-        ];
+        ]);
     }
 }

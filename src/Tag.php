@@ -24,16 +24,19 @@ class Tag extends \losthost\DB\DBObject {
             ) COMMENT = 'v1.0.0';  
             END;
     
-    const SQL_UPGRADE_FROM_1_0_0 = <<<END
-            ALTER TABLE %TABLE_NAME%
-            COMMENT = 'v1.0.1'
-            END;
-    
-    public function __construct($name, $create=true) {
-        parent::__construct('name = ?', $name, $create);
-        if ($this->isNew()) {
-            $this->name = $name;
-            $this->write('New tag created');
+    public function __construct($name_or_id, $create=true) {
+        if (\is_int($name_or_id)) {
+            if ($create) {
+                throw new \Exception('Avaiting name to create a tag. Number given.');
+            }
+            parent::__construct ('id = ?', $name_or_id, false);
+        } else {
+            parent::__construct('name = ?', $name_or_id, $create);
+            if ($this->isNew()) {
+                $this->name = $name_or_id;
+                $this->write('New tag created');
+            }
         }
     }
+    
 }

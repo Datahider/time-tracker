@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "89f48aa8bcfefc81bbd8f6ca3b827438",
+    "content-hash": "ff728490aecd4bba8f5db02346967f77",
     "packages": [
         {
             "name": "losthost/db",
-            "version": "v1.4.2",
+            "version": "v1.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Datahider/DB.git",
-                "reference": "1f703884c98f248ad886e47b818294107a713d75"
+                "reference": "73caaefbdb5ae02031934cb303a8e0b2a427242f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Datahider/DB/zipball/1f703884c98f248ad886e47b818294107a713d75",
-                "reference": "1f703884c98f248ad886e47b818294107a713d75",
+                "url": "https://api.github.com/repos/Datahider/DB/zipball/73caaefbdb5ae02031934cb303a8e0b2a427242f",
+                "reference": "73caaefbdb5ae02031934cb303a8e0b2a427242f",
                 "shasum": ""
             },
             "require": {
@@ -50,9 +50,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Datahider/DB/issues",
-                "source": "https://github.com/Datahider/DB/tree/v1.4.2"
+                "source": "https://github.com/Datahider/DB/tree/v1.4.6"
             },
-            "time": "2023-09-07T00:26:34+00:00"
+            "time": "2023-09-10T04:34:00+00:00"
         },
         {
             "name": "losthost/self-testing-suite",

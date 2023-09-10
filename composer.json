@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "losthost/db": "1.4.2"
+        "losthost/db": "1.4.6"
     },
     "autoload": {
         "psr-4": {
