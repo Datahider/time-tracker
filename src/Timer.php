@@ -7,28 +7,27 @@
 
 namespace losthost\timetracker;
 
-/**
- * Description of Timer
- *
- * @author drweb
- */
-class Timer extends \losthost\DB\DBObject {
+use losthost\DB\DB;
+use losthost\DB\DBObject;
+
+class Timer extends DBObject {
     
-    const TABLE_NAME = 'timers';
+    const METADATA = [
+        'id' => 'BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT',
+        'subject' => 'VARCHAR(100)',
+        'current_event' => 'BIGINT(20)',
+        'PRIMARY KEY' => 'id',
+        'UNIQUE INDEX SUBJECT' => 'subject'
+    ];
     
-    const SQL_CREATE_TABLE = <<<END
-            CREATE TABLE IF NOT EXISTS %TABLE_NAME% (
-                id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-                subject varchar(100),
-                current_event bigint(20),
-                PRIMARY KEY (id)
-            ) COMMENT = 'v1.0.0';
-            END;
+    public static function tableName() {
+        return DB::$prefix. 'timers';
+    }
+
 
     public function __construct($subject, $create=true) {
-        parent::__construct('subject = ?', $subject, $create);
+        parent::__construct(['subject' => $subject], $create);
         if ($this->isNew()) {
-            $this->subject = $subject;
             $this->write('New timer created');
         }
     }

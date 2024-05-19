@@ -1,6 +1,7 @@
 {
     "name": "losthost/time-tracker",
     "description": "Description of project time-tracker.",
+    "minimum-stability": "beta",
     "authors": [
         {
             "name": "drweb",
@@ -8,11 +9,14 @@
         }
     ],
     "require": {
-        "losthost/db": "1.4.6"
+        "losthost/db": "^3"
     },
     "autoload": {
         "psr-4": {
             "losthost\\timetracker\\": "src"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10"
     }
 }

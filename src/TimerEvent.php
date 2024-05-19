@@ -1,35 +1,24 @@
 <?php
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/PHPClass.php to edit this template
- */
-
 namespace losthost\timetracker;
 
-/**
- * Description of TimerEvent
- *
- * @author drweb
- */
-class TimerEvent extends \losthost\DB\DBObject {
+use losthost\DB\DB;
+use losthost\DB\DBObject;
+
+class TimerEvent extends DBObject {
     
-    const TABLE_NAME = 'timer_events';
-    
-    const SQL_CREATE_TABLE = <<<END
-            CREATE TABLE IF NOT EXISTS %TABLE_NAME% (
-                id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-                timer bigint(20) NOT NULL,
-                project varchar(100) NOT NULL,
-                object varchar(100) NOT NULL,
-                comment varchar(250) NOT NULL DEFAULT '',
-                started tinyint(1) NOT NULL DEFAULT 0,
-                start_time DATETIME NOT NULL,
-                end_time DATETIME,
-                duration BIGINT(20),
-                PRIMARY KEY (id)
-            ) COMMENT = 'v1.0.0';
-            END;
+    const METADATA = [
+        'id' => 'BIGINT(20) NOT NULL AUTO_INCREMENT',
+        'timer' => 'BIGINT(20) NOT NULL',
+        'project' => 'VARCHAR(100) NOT NULL',
+        'object' => 'VARCHAR(100) NOT NULL',
+        'comment' => 'VARCHAR(250) NOT NULL DEFAULT ""',
+        'started' => 'TINYINT(1) NOT NULL DEFAULT 0',
+        'start_time' => 'DATETIME NOT NULL',
+        'end_time' => 'DATETIME',
+        'duration' => 'BIGINT(20)',
+        'PRIMARY KEY' => 'id'
+    ];
     
     const SQL_SELECT_TAGS = <<<END
             SELECT tag 
@@ -40,6 +29,9 @@ class TimerEvent extends \losthost\DB\DBObject {
     protected $__timer;
     protected $__tags = [];
 
+    public static function tableName() {
+        return DB::$prefix. 'timer_events';
+    }
 
     public function __construct(Timer $timer, ...$args) {
         
@@ -52,7 +44,7 @@ class TimerEvent extends \losthost\DB\DBObject {
                 $this->timer = $timer->id;
                 break;
             case 1:
-                parent::__construct('id = ? AND timer = ?', [$args[0], $timer->id]);
+                parent::__construct(['id' => $args[0], 'timer' => $timer->id]);
                 break;
             case 4:
                 parent::__construct();
