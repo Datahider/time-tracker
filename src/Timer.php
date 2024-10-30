@@ -9,8 +9,14 @@ namespace losthost\timetracker;
 
 use losthost\DB\DB;
 use losthost\DB\DBObject;
+use losthost\DB\DBList;
+use losthost\DB\DBView;
 
 class Timer extends DBObject {
+    
+    const LIST_STOPPED = 0;
+    const LIST_STARTED = 1;
+    const LIST_BOTH = 2;
     
     const METADATA = [
         'id' => 'BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT',
@@ -92,23 +98,27 @@ class Timer extends DBObject {
         
     }
     
-    protected function _test_data() {
+    static public function getStartedByObjectProject(string $object, string $project) : array {
         
-        return array_merge(parent::_test_data(), [
-            'isStarted' => '_test_skip_',
-            'start' => [
-                ['test object 1', 'test project 1', 'test comment 1', new Tag('tag 1'), null]
-            ],
-            'stop' => [
-                [null]
-            ],
-            'add' => [
-                ['test object 1', 'test project 2', 'now', 10, 'test comment 2', new Tag('tag 1'), null],
-                ['test object 1', 'test project 3', 'now', new \DateInterval('PT10M'), 'test comment 3', new Tag('tag 2'), null]
-            ],
-            '_test_timer_events' => [
-                [false]
-            ]
-        ]);
+        $view = new DBView(<<<FIN
+            SELECT 
+                t.subject AS subject 
+            FROM 
+                [timers] AS t
+                LEFT JOIN [timer_events] AS e ON e.timer = t.id 
+            WHERE
+                e.object = ?
+                AND e.project = ?
+                AND e.started = 1
+            FIN, [$object, $project]);
+        
+        $result = [];
+
+        while ($view->next()) {
+            $result[] = new Timer($view->subject);
+        }
+
+        return $result;
+        
     }
 }
