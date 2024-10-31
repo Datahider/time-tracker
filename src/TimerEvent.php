@@ -68,6 +68,8 @@ class TimerEvent extends DBObject {
                 $args_passed = 1 + $arg_count;
                 throw new \Exception("TimerEvent constructor awaits 1, 2, 5, 6 or 7 arguments. $args_passed passed.");
         }
+        
+        TagBinder::initDataStructure();
     }
     
     public function hasTag(Tag $tag) {
