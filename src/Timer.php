@@ -43,12 +43,21 @@ class Timer extends DBObject {
     }
     
     public function start($object, $project, $comment='', $tags=[]) {
-        if ($this->isStarted()) {
-            throw new \Exception('Timer is already started.', -10013);
+        DB::beginTransaction();
+        try {
+            
+            $lock = new DBView('SELECT current_event FROM [timers] WHERE id = ? AND current_event IS NULL FOR UPDATE', [$this->id]);
+            if (!$lock->next()) {
+                throw new \Exception('Timer is already started.', -10013);
+            }
+
+            $event = new TimerEvent($this);
+            $event->start($object, $project, $comment, $tags);
+        } catch (\Exception $ex) {
+            DB::rollBack();
+            throw $ex;
         }
-        
-        $event = new TimerEvent($this);
-        $event->start($object, $project, $comment, $tags);
+        DB::commit();
     }
     
     public function stop($comment=null, $tags=null) {

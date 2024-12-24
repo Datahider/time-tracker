@@ -15,3 +15,11 @@ require 'db_pass.php';
 DB::connect($db_host, $db_user, $db_pass, $db_name, $db_prefix);
 DB::dropAllTables(true, true);
 
+\losthost\timetracker\Timer::initDataStructure();
+losthost\timetracker\TimerEvent::initDataStructure();
+\losthost\timetracker\Tag::initDataStructure();
+TagBinder::initDataStructure();
+
+
+
+
